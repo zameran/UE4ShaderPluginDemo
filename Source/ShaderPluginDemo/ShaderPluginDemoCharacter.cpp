@@ -70,6 +70,7 @@ void AShaderPluginDemoCharacter::BeginPlay() {
     Super::BeginPlay();
     FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("GripPoint")); //Attach gun mesh component to Skeleton, doing it here because the skelton is not yet created in the constructor
 
+	CustomPixelShading = new FCustomPixelShader(PixelShaderTopLeftColor, GetWorld()->Scene->GetFeatureLevel());
     PixelShading = new FPixelShaderUsageExample(PixelShaderTopLeftColor, GetWorld()->Scene->GetFeatureLevel());
     ComputeShading = new FComputeShaderUsageExample(ComputeShaderSimulationSpeed,1024, 1024, GetWorld()->Scene->GetFeatureLevel());
 }
@@ -81,6 +82,10 @@ void AShaderPluginDemoCharacter::BeginDestroy() {
     if (PixelShading) {
         delete PixelShading;
     }
+
+	if (CustomPixelShading) {
+		delete CustomPixelShading;
+	}
 
     if (ComputeShading) {
         delete ComputeShading;

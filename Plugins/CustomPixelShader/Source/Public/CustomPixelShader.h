@@ -65,8 +65,8 @@ private:
 	bool bIsUnloading;
 	bool bSave;
 
-	FPixelShaderConstantParameters ConstantParameters;
-	FPixelShaderVariableParameters VariableParameters;
+	FCustomPixelShaderConstantParameters ConstantParameters;
+	FCustomPixelShaderVariableParameters VariableParameters;
 	ERHIFeatureLevel::Type FeatureLevel;
 
 	/** Main texture */

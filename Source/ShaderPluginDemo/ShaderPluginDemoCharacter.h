@@ -1,6 +1,7 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Character.h"
+#include "CustomPixelShader.h"
 #include "PixelShaderUsageExample.h"
 #include "ComputeShaderUsageExample.h"
 #include "ShaderPluginDemoCharacter.generated.h"
@@ -133,6 +134,7 @@ protected:
 
 private:
 	FPixelShaderUsageExample* PixelShading;
+	FCustomPixelShader* CustomPixelShading;
 	FComputeShaderUsageExample* ComputeShading;
 
 	float EndColorBuildup;

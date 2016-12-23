@@ -29,23 +29,23 @@
 #include "RHICommandList.h"
 
 //This buffer should contain variables that never, or rarely change
-BEGIN_UNIFORM_BUFFER_STRUCT(FPixelShaderConstantParameters, )
+BEGIN_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderConstantParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, StartColor)
-END_UNIFORM_BUFFER_STRUCT(FPixelShaderConstantParameters)
+END_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderConstantParameters)
 
 //This buffer is for variables that change very often (each frame for example)
-BEGIN_UNIFORM_BUFFER_STRUCT(FPixelShaderVariableParameters, )
+BEGIN_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderVariableParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(float, TextureParameterBlendFactor)
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, EndColor)
-END_UNIFORM_BUFFER_STRUCT(FPixelShaderVariableParameters)
+END_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderVariableParameters)
 
-typedef TUniformBufferRef<FPixelShaderConstantParameters> FPixelShaderConstantParametersRef;
-typedef TUniformBufferRef<FPixelShaderVariableParameters> FPixelShaderVariableParametersRef;
+typedef TUniformBufferRef<FCustomPixelShaderConstantParameters> FCustomPixelShaderConstantParametersRef;
+typedef TUniformBufferRef<FCustomPixelShaderVariableParameters> FCustomPixelShaderVariableParametersRef;
 
 /************************************************************************/
 /* This is the type we use as vertices for our fullscreen quad.         */
 /************************************************************************/
-struct FTextureVertex
+struct FCustomTextureVertex
 {
 	FVector4 Position;
 	FVector2D UV;
@@ -55,7 +55,7 @@ struct FTextureVertex
 /* We define our vertex declaration to let us get our UV coords into    */
 /* the shader                                                           */
 /************************************************************************/
-class FTextureVertexDeclaration : public FRenderResource
+class FCustomTextureVertexDeclaration : public FRenderResource
 {
 public:
 	FVertexDeclarationRHIRef VertexDeclarationRHI;
@@ -63,9 +63,9 @@ public:
 	virtual void InitRHI() override
 	{
 		FVertexDeclarationElementList Elements;
-		uint32 Stride = sizeof(FTextureVertex);
-		Elements.Add(FVertexElement(0, STRUCT_OFFSET(FTextureVertex, Position), VET_Float4, 0, Stride));
-		Elements.Add(FVertexElement(0, STRUCT_OFFSET(FTextureVertex, UV), VET_Float2, 1, Stride));
+		uint32 Stride = sizeof(FCustomTextureVertex);
+		Elements.Add(FVertexElement(0, STRUCT_OFFSET(FCustomTextureVertex, Position), VET_Float4, 0, Stride));
+		Elements.Add(FVertexElement(0, STRUCT_OFFSET(FCustomTextureVertex, UV), VET_Float2, 1, Stride));
 		VertexDeclarationRHI = RHICreateVertexDeclaration(Elements);
 	}
 
@@ -78,17 +78,17 @@ public:
 /************************************************************************/
 /* A simple passthrough vertexshader that we will use.                  */
 /************************************************************************/
-class FVertexShaderExample : public FGlobalShader
+class FCustomVertexShaderExample : public FGlobalShader
 {
-	DECLARE_SHADER_TYPE(FVertexShaderExample, Global);
+	DECLARE_SHADER_TYPE(FCustomVertexShaderExample, Global);
 public:
 
 	static bool ShouldCache(EShaderPlatform Platform) { return true; }
 
-	FVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) :
+	FCustomVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) :
 		FGlobalShader(Initializer)
 	{}
-	FVertexShaderExample() {}
+	FCustomVertexShaderExample() {}
 };
 
 
@@ -121,7 +121,7 @@ public:
 	//This function is required to let us bind our runtime surface to the shader using an SRV.
 	void SetSurfaces(FRHICommandList& RHICmdList, FShaderResourceViewRHIRef TextureParameterSRV);
 	//This function is required to bind our constant / uniform buffers to the shader.
-	void SetUniformBuffers(FRHICommandList& RHICmdList, FPixelShaderConstantParameters& ConstantParameters, FPixelShaderVariableParameters& VariableParameters);
+	void SetUniformBuffers(FRHICommandList& RHICmdList, FCustomPixelShaderConstantParameters& ConstantParameters, FCustomPixelShaderVariableParameters& VariableParameters);
 	//This is used to clean up the buffer binds after each invocation to let them be changed and used elsewhere if needed.
 	void UnbindBuffers(FRHICommandList& RHICmdList);
 

@@ -8,6 +8,6 @@ public class ShaderPluginDemo : ModuleRules
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "RHI" });
 
-        PublicDependencyModuleNames.AddRange( new string[] { "PixelShader", "ComputeShader" } );
+        PublicDependencyModuleNames.AddRange( new string[] { "PixelShader", "ComputeShader", "CustomPixelShader" } );
     }
 }

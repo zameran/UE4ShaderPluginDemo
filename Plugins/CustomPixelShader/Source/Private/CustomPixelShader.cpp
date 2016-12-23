@@ -27,16 +27,16 @@
 
 //It seems to be the convention to expose all vertex declarations as globals, and then reference them as externs in the headers where they are needed.
 //It kind of makes sense since they do not contain any parameters that change and are purely used as their names suggest, as declarations :)
-TGlobalResource<FTextureVertexDeclaration> GTextureVertexDeclaration;
+TGlobalResource<FCustomTextureVertexDeclaration> GTextureVertexDeclaration;
 
 FCustomPixelShader::FCustomPixelShader(FColor StartColor, ERHIFeatureLevel::Type ShaderFeatureLevel)
 {
 	FeatureLevel = ShaderFeatureLevel;
 
-	ConstantParameters = FPixelShaderConstantParameters();
+	ConstantParameters = FCustomPixelShaderConstantParameters();
 	ConstantParameters.StartColor = FVector4(StartColor.R / 255.0, StartColor.G / 255.0, StartColor.B / 255.0, StartColor.A / 255.0);
 	
-	VariableParameters = FPixelShaderVariableParameters();
+	VariableParameters = FCustomPixelShaderVariableParameters();
 	
 	bMustRegenerateSRV = false;
 	bIsPixelShaderExecuting = false;
@@ -124,7 +124,7 @@ void FCustomPixelShader::ExecutePixelShaderInternal()
 	RHICmdList.SetDepthStencilState(TStaticDepthStencilState<false, CF_Always>::GetRHI());
 	
 	static FGlobalBoundShaderState BoundShaderState;
-	TShaderMapRef<FVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
+	TShaderMapRef<FCustomVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
 	TShaderMapRef<FCustomPixelShaderDeclaration> PixelShader(GetGlobalShaderMap(FeatureLevel));
 
 	SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
@@ -133,7 +133,7 @@ void FCustomPixelShader::ExecutePixelShaderInternal()
 	PixelShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
 
 	// Draw a fullscreen quad that we can run our pixel shader on
-	FTextureVertex Vertices[4];
+	FCustomTextureVertex Vertices[4];
 	Vertices[0].Position = FVector4(-1.0f, 1.0f, 0, 1.0f);
 	Vertices[1].Position = FVector4(1.0f, 1.0f, 0, 1.0f);
 	Vertices[2].Position = FVector4(-1.0f, -1.0f, 0, 1.0f);
