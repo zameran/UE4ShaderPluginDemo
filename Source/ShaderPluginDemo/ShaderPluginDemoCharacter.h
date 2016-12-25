@@ -2,7 +2,7 @@
 #pragma once
 #include "GameFramework/Character.h"
 #include "CustomPixelShader.h"
-#include "PixelShaderUsageExample.h"
+// #include "PixelShaderUsageExample.h"
 #include "ComputeShaderUsageExample.h"
 #include "ShaderPluginDemoCharacter.generated.h"
 
@@ -133,7 +133,7 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 
 private:
-	FPixelShaderUsageExample* PixelShading;
+	// FPixelShaderUsageExample* PixelShading;
 	FCustomPixelShader* CustomPixelShading;
 	FComputeShaderUsageExample* ComputeShading;
 
@@ -144,6 +144,8 @@ private:
 	float TotalElapsedTime;
 
 	void ModifyComputeShaderBlend(float NewScalar);
+	void AddComputeShaderBlend();
+	void SubComputeShaderBlend();
 	void SavePixelShaderOutput();
 	void SaveComputeShaderOutput();
 };

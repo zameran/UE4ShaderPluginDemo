@@ -70,9 +70,17 @@ void MainPixelShader(
 	uint g = (packedValue & 0x0000FF00) >> 8;
 	uint b = (packedValue & 0x00FF0000) >> 16;
 	uint a = (packedValue & 0xFF000000) >> 24;
+	 
+	// Here we will just blend using the TextureParameterBlendFactor between our simple color change shader
+	//  and the input from the compute shader
+
+	// float alpha = length(uv) / length(float2(1, 1));
+	// OutColor = lerp(PSConstant.StartColor, PSVariable.EndColor, alpha) * (1.0 -	PSVariable.TextureParameterBlendFactor)
+	// 		 + float4(r, g, b, a) / 255.0									*	PSVariable.TextureParameterBlendFactor;
 	
-	//Here we will just blend using the TextureParameterBlendFactor between our simple color change shader and the input from the compute shader
-	float alpha = length(uv) / length(float2(1, 1));
-	OutColor = lerp(PSConstant.StartColor, PSVariable.EndColor, alpha) * (1.0 - PSVariable.TextureParameterBlendFactor) 
-			   + float4(r, g, b, a) / 255.0 * PSVariable.TextureParameterBlendFactor;
+	OutColor = lerp(
+		float4(uv.xy, 0.0, 0.0),				// uv coord
+		float4(r, g, b, a) / 255.0,				// compute shader input
+		step(uv.x, PSVariable.TextureParameterBlendFactor)	// uniform blend factor
+	);
 }

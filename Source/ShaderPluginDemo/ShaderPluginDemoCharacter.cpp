@@ -71,7 +71,7 @@ void AShaderPluginDemoCharacter::BeginPlay() {
     FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("GripPoint")); //Attach gun mesh component to Skeleton, doing it here because the skelton is not yet created in the constructor
 
 	CustomPixelShading = new FCustomPixelShader(PixelShaderTopLeftColor, GetWorld()->Scene->GetFeatureLevel());
-    PixelShading = new FPixelShaderUsageExample(PixelShaderTopLeftColor, GetWorld()->Scene->GetFeatureLevel());
+    // PixelShading = new FPixelShaderUsageExample(PixelShaderTopLeftColor, GetWorld()->Scene->GetFeatureLevel());
     ComputeShading = new FComputeShaderUsageExample(ComputeShaderSimulationSpeed,1024, 1024, GetWorld()->Scene->GetFeatureLevel());
 }
 
@@ -79,10 +79,10 @@ void AShaderPluginDemoCharacter::BeginPlay() {
 void AShaderPluginDemoCharacter::BeginDestroy() {
     Super::BeginDestroy();
 
-    if (PixelShading) {
-        delete PixelShading;
-    }
-
+    // if (PixelShading) {
+    //     delete PixelShading;
+    // }
+	 
 	if (CustomPixelShading) {
 		delete CustomPixelShading;
 	}
@@ -94,8 +94,10 @@ void AShaderPluginDemoCharacter::BeginDestroy() {
 
 //Saving functions
 void AShaderPluginDemoCharacter::SavePixelShaderOutput() {
-    PixelShading->Save();
+	// PixelShading->Save();
+    CustomPixelShading->Save();
 }
+
 void AShaderPluginDemoCharacter::SaveComputeShaderOutput() {
     ComputeShading->Save();
 }
@@ -104,29 +106,60 @@ void AShaderPluginDemoCharacter::ModifyComputeShaderBlend(float NewScalar) {
     ComputeShaderBlendScalar = NewScalar;
 }
 
+void AShaderPluginDemoCharacter::AddComputeShaderBlend()
+{
+	ModifyComputeShaderBlend(0.1f);
+}
+
+void AShaderPluginDemoCharacter::SubComputeShaderBlend()
+{
+	ModifyComputeShaderBlend(-0.1f);
+}
+
+
 void AShaderPluginDemoCharacter::Tick(float DeltaSeconds) {
     Super::Tick(DeltaSeconds);
 
     TotalElapsedTime += DeltaSeconds;
 
-    if (PixelShading) {
-        EndColorBuildup = FMath::Clamp(EndColorBuildup + DeltaSeconds * EndColorBuildupDirection, 0.0f, 1.0f);
+    // if (PixelShading) {
+    //     EndColorBuildup = FMath::Clamp(EndColorBuildup + DeltaSeconds * EndColorBuildupDirection, 0.0f, 1.0f);
+	// 
+    //     if (EndColorBuildup >= 1.0 || EndColorBuildup <= 0) {
+    //         EndColorBuildupDirection *= -1;
+    //     }
+	// 
+	// 
+    //     FTexture2DRHIRef InputTexture = NULL;
+	// 
+    //     if (ComputeShading) {
+    //         ComputeShading->ExecuteComputeShader(TotalElapsedTime);
+	// 		 //This is the output texture from the compute shader that we will pass to the pixel shader.
+    //         InputTexture = ComputeShading->GetTexture();
+    //     }
+	// 
+    //     ComputeShaderBlend = FMath::Clamp(ComputeShaderBlend + ComputeShaderBlendScalar * DeltaSeconds, 0.0f, 1.0f);
+    //     PixelShading->ExecutePixelShader(RenderTarget, InputTexture, FColor(EndColorBuildup * 255, 0, 0, 255), ComputeShaderBlend);
+    // }
 
-        if (EndColorBuildup >= 1.0 || EndColorBuildup <= 0) {
-            EndColorBuildupDirection *= -1;
-        }
+	if (CustomPixelShading) {
+
+		if (EndColorBuildup >= 1.0 || EndColorBuildup <= 0) {
+			EndColorBuildupDirection *= -1;
+		}
 
 
-        FTexture2DRHIRef InputTexture = NULL;
+		FTexture2DRHIRef InputTexture = NULL;
 
-        if (ComputeShading) {
-            ComputeShading->ExecuteComputeShader(TotalElapsedTime);
-            InputTexture = ComputeShading->GetTexture(); //This is the output texture from the compute shader that we will pass to the pixel shader.
-        }
+		if (ComputeShading) {
+			ComputeShading->ExecuteComputeShader(TotalElapsedTime);
+			//This is the output texture from the compute shader that we will pass to the pixel shader.
+			InputTexture = ComputeShading->GetTexture(); 
+		}
 
-        ComputeShaderBlend = FMath::Clamp(ComputeShaderBlend + ComputeShaderBlendScalar * DeltaSeconds, 0.0f, 1.0f);
-        PixelShading->ExecutePixelShader(RenderTarget, InputTexture, FColor(EndColorBuildup * 255, 0, 0, 255), ComputeShaderBlend);
-    }
+		ComputeShaderBlend = FMath::Clamp(ComputeShaderBlend + ComputeShaderBlendScalar * DeltaSeconds, 0.0f, 1.0f);
+		CustomPixelShading->ExecutePixelShader(RenderTarget, InputTexture, FColor(EndColorBuildup * 255, 0, 0, 255), ComputeShaderBlend);
+	}
 }
 
 void AShaderPluginDemoCharacter::OnFire() {
@@ -173,15 +206,15 @@ void AShaderPluginDemoCharacter::OnFire() {
     }
 }
 
-void AShaderPluginDemoCharacter::SetupPlayerInputComponent(
-    class UInputComponent* InputComponent) {
+void AShaderPluginDemoCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent) {
     // set up gameplay key bindings
     check(InputComponent);
 
     //ShaderPluginDemo Specific input mappings
     InputComponent->BindAction("SavePixelShaderOutput", IE_Pressed, this, &AShaderPluginDemoCharacter::SavePixelShaderOutput);
     InputComponent->BindAction("SaveComputeShaderOutput", IE_Pressed, this, &AShaderPluginDemoCharacter::SaveComputeShaderOutput);
-    InputComponent->BindAxis("ComputeShaderBlend", this, &AShaderPluginDemoCharacter::ModifyComputeShaderBlend);
+    InputComponent->BindAction("AddComputeShaderBlend", IE_Pressed, this, &AShaderPluginDemoCharacter::AddComputeShaderBlend);
+	InputComponent->BindAction("SubComputeShaderBlend", IE_Pressed, this, &AShaderPluginDemoCharacter::SubComputeShaderBlend);
     //ShaderPluginDemo Specific input mappings
 
 

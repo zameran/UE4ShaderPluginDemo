@@ -33,7 +33,7 @@ BEGIN_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderConstantParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, StartColor)
 END_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderConstantParameters)
 
-//This buffer is for variables that change very often (each frame for example)
+//This buffer is for variables that change very often (each frame for example)   
 BEGIN_UNIFORM_BUFFER_STRUCT(FCustomPixelShaderVariableParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(float, TextureParameterBlendFactor)
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, EndColor)
