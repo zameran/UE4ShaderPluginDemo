@@ -1,7 +1,8 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Character.h"
-#include "PixelShaderUsageExample.h"
+#include "CustomPixelShader.h"
+// #include "PixelShaderUsageExample.h"
 #include "ComputeShaderUsageExample.h"
 #include "ShaderPluginDemoCharacter.generated.h"
 
@@ -132,7 +133,8 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 
 private:
-	FPixelShaderUsageExample* PixelShading;
+	// FPixelShaderUsageExample* PixelShading;
+	FCustomPixelShader* CustomPixelShading;
 	FComputeShaderUsageExample* ComputeShading;
 
 	float EndColorBuildup;
@@ -142,6 +144,8 @@ private:
 	float TotalElapsedTime;
 
 	void ModifyComputeShaderBlend(float NewScalar);
+	void AddComputeShaderBlend();
+	void SubComputeShaderBlend();
 	void SavePixelShaderOutput();
 	void SaveComputeShaderOutput();
 };
