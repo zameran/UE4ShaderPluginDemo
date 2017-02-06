@@ -1,0 +1,23 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "ShaderEngine",
+	"Description": "Standalone shaders. Including custom Compute/Pixel shaders.",
+	"Category": "Rendering",
+	"CreatedBy": "zameran [Originally by Temaran]",
+	"CreatedByURL": "zameran9@gmail.com [Originally by temaran@gmail.com]",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "ShaderEngine",
+			"Type": "Runtime",
+			"LoadingPhase": "PostConfigInit"
+		}
+	]
+}
