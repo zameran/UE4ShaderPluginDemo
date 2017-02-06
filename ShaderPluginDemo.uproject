@@ -24,10 +24,6 @@
 			"Enabled": false
 		},
 		{
-			"Name": "ExampleDeviceProfileSelector",
-			"Enabled": false
-		},
-		{
 			"Name": "IOSDeviceProfileSelector",
 			"Enabled": false
 		},
@@ -185,6 +181,10 @@
 		},
 		{
 			"Name": "SteamVR",
+			"Enabled": false
+		},
+		{
+			"Name": "ExampleDeviceProfileSelector",
 			"Enabled": false
 		}
 	],
