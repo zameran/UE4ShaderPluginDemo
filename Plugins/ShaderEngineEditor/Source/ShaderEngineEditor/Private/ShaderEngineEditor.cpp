@@ -3,6 +3,8 @@
 #include "SlateBasics.h"
 #include "SlateExtras.h"
 
+#include "ShaderCopyHelper.h"
+
 #include "ShaderEngineEditorStyle.h"
 #include "ShaderEngineEditorCommands.h"
 
@@ -22,15 +24,16 @@ void FShaderEngineEditorModule::StartupModule()
 	FShaderEngineEditorCommands::Register();
 	
 	PluginCommands = MakeShareable(new FUICommandList);
-	PluginCommands->MapAction(FShaderEngineEditorCommands::Get().PluginAction, FExecuteAction::CreateRaw(this, &FShaderEngineEditorModule::PluginButtonClicked), FCanExecuteAction());
-		
-	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");	
+	PluginCommands->MapAction(FShaderEngineEditorCommands::Get().PluginAction, FExecuteAction::CreateRaw(this, &FShaderEngineEditorModule::PluginButtonClicked));
+
+	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	{
 		TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
 
 		ToolbarExtender->AddToolBarExtension("Compile", EExtensionHook::After, PluginCommands, FToolBarExtensionDelegate::CreateRaw(this, &FShaderEngineEditorModule::AddToolbarExtension));
 
 		LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(ToolbarExtender);
+		LevelEditorModule.GetGlobalLevelEditorActions()->Append(PluginCommands.ToSharedRef());
 	}
 
 	UE_LOG(ShaderEngineEditor, Log, TEXT("Shader Engine Editor Plugin loaded!"));
@@ -47,11 +50,13 @@ void FShaderEngineEditorModule::ShutdownModule()
 
 void FShaderEngineEditorModule::PluginButtonClicked()
 {
-	FText DialogText = FText::Format(LOCTEXT("PluginButtonDialogText", "Add code to {0} in {1} to override this button's actions"),
-					   FText::FromString(TEXT("FShaderEngineEditorModule::PluginButtonClicked()")),
-					   FText::FromString(TEXT("ShaderEngineEditor.cpp")));
+	FShaderCopyHelperModule& ShaderCopyHelperModule = FModuleManager::GetModuleChecked<FShaderCopyHelperModule>("ShaderCopyHelper");
+	{
+		ShaderCopyHelperModule.PopShaders();
+		ShaderCopyHelperModule.PushShaders();
+	}
 
-	FMessageDialog::Open(EAppMsgType::Ok, DialogText);
+	//GEngine->GameViewport->Exec(NULL, TEXT("RECOMPILESHADERS CHANGED"), *GLog);
 }
 
 void FShaderEngineEditorModule::AddToolbarExtension(FToolBarBuilder& Builder)

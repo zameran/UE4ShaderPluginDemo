@@ -16,7 +16,7 @@ public class ShaderEngineEditor : ModuleRules
         PrivateIncludePaths.AddRange(
             new string[]
             {
-                "ShaderEngineEditor/Private",
+                "ShaderEngineEditor/Private"
             }
         );
 
@@ -25,6 +25,7 @@ public class ShaderEngineEditor : ModuleRules
             new string[]
             {
                 "Core",
+                "ShaderCopyHelper"
             }
         );
 

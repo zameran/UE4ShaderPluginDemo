@@ -2,7 +2,7 @@
   "FileVersion": 3,
   "Version": 1,
   "VersionName": "1.0",
-  "FriendlyName": "ShaderEngineCopyHelper",
+  "FriendlyName": "ShaderCopyHelper",
   "Description": "This plugin will copy all files present in your Project/Shaders folder to your Engine/Shaders folder",
   "Category": "Rendering",
   "CreatedBy": "zameran [Originally by Temaran]",

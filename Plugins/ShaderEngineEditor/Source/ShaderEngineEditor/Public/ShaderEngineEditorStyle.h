@@ -2,7 +2,7 @@
 
 #include "SlateBasics.h"
 
-class FShaderEngineEditorStyle
+class SHADERENGINEEDITOR_API FShaderEngineEditorStyle
 {
 public:
 	static void Initialize();

@@ -3,9 +3,8 @@
 #include "ModuleManager.h"
 
 class FToolBarBuilder;
-class FMenuBuilder;
 
-class FShaderEngineEditorModule : public IModuleInterface
+class SHADERENGINEEDITOR_API FShaderEngineEditorModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
