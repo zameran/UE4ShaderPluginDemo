@@ -4,7 +4,6 @@ public class ShaderEngine : ModuleRules
 {
 	public ShaderEngine(TargetInfo Target)
 	{
-
 		PublicIncludePaths.AddRange(
 			new string[] 
 			{

@@ -1,5 +1,6 @@
 #include "ShaderEngine.h"
 #include "ShaderParameterUtils.h"
+
 #include "RHIStaticStates.h"
 
 // These are needed to actually implement the constant buffers so they are available inside our shader
@@ -52,6 +53,3 @@ void FCustomPixelShaderDeclaration::UnbindBuffers(FRHICommandList& RHICmdList)
 //                      ShaderType               ShaderFileName     Shader function name            Type
 IMPLEMENT_SHADER_TYPE(, FCustomVertexShaderExample, TEXT("CustomPixelShaderExample"), TEXT("MainVertexShader"), SF_Vertex);
 IMPLEMENT_SHADER_TYPE(, FCustomPixelShaderDeclaration, TEXT("CustomPixelShaderExample"), TEXT("MainPixelShader"), SF_Pixel);
-
-// Needed to make sure the plugin works :)
-//IMPLEMENT_MODULE(FDefaultModuleImpl, PixelShader)

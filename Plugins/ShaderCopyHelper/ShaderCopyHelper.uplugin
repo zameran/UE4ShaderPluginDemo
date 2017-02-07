@@ -16,7 +16,7 @@
   "Modules": [
     {
       "Name": "ShaderCopyHelper",
-      "Type": "Developer",
+      "Type": "Developer", 
       "LoadingPhase": "PostConfigInit"
     }
   ]

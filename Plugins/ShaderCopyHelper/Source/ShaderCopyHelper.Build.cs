@@ -6,13 +6,45 @@ namespace UnrealBuildTool.Rules
     {
         public ShaderCopyHelper(TargetInfo Target)
         {
-            PublicDependencyModuleNames.AddRange(new string[]
-            {
-                "Core",
-                "CoreUObject",
-                "Engine",
-                "InputCore",
-            });
+            PublicIncludePaths.AddRange(
+                new string[]
+                {
+                    "ShaderCopyHelper/Public"
+                }
+            );
+
+
+            PrivateIncludePaths.AddRange(
+                new string[]
+                {
+                    "ShaderCopyHelper/Private",
+                }
+            );
+
+            PublicDependencyModuleNames.AddRange(
+                new string[]
+                {
+                    "Core",
+                    "CoreUObject",
+                    "Engine",
+                    "InputCore",
+                }
+            );
+
+
+            PrivateDependencyModuleNames.AddRange(
+                new string[]
+                {
+
+                }
+            );
+
+            DynamicallyLoadedModuleNames.AddRange(
+                new string[]
+                {
+
+                }
+            );
         }
     }
 }

@@ -7,6 +7,7 @@ DEFINE_LOG_CATEGORY_STATIC(ShaderEngine, Log, All)
 void FShaderEngineModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
+
 	UE_LOG(ShaderEngine, Log, TEXT("Shader Engine Plugin loaded!"));
 }
 

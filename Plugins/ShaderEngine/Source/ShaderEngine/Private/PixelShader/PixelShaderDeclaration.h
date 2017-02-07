@@ -57,8 +57,8 @@ public:
 class FVertexShaderExample : public FGlobalShader
 {
 	DECLARE_SHADER_TYPE(FVertexShaderExample, Global)
-public:
 
+public:
 	static bool ShouldCache(EShaderPlatform Platform) { return true; }
 
 	FVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer)	{}
@@ -75,7 +75,6 @@ class FPixelShaderDeclaration : public FGlobalShader
 	DECLARE_SHADER_TYPE(FPixelShaderDeclaration, Global)
 
 public:
-
 	FPixelShaderDeclaration() {}
 
 	explicit FPixelShaderDeclaration(const ShaderMetaType::CompiledShaderInitializerType& Initializer);

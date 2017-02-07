@@ -92,15 +92,15 @@ protected:
 	TouchData TouchItem;
 
 protected:
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* IC) override;
 
 	/*
 	 * Configures input for touchscreen devices if there is a valid touch interface for doing so
 	 *
-	 * @param	InputComponent	The input component pointer to bind controls to
+	 * @param	IC	The input component pointer to bind controls to
 	 * @returns true if touch controls were enabled.
 	 */
-	bool EnableTouchscreenMovement(UInputComponent* InputComponent);
+	bool EnableTouchscreenMovement(UInputComponent* IC);
 
 public:
 	/** Returns Mesh1P subobject **/

@@ -12,8 +12,12 @@
 	],
 	"Plugins": [
 		{
-			"Name": "Paper2D",
-			"Enabled": false
+			"Name": "ShaderEngine",
+			"Enabled": true
+		},
+		{
+			"Name": "ShaderCopyHelper",
+			"Enabled": true
 		},
 		{
 			"Name": "LocationServicesBPLibrary",
@@ -185,6 +189,10 @@
 		},
 		{
 			"Name": "ExampleDeviceProfileSelector",
+			"Enabled": false
+		},
+		{
+			"Name": "Paper2D",
 			"Enabled": false
 		}
 	],
