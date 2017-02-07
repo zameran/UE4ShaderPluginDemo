@@ -1,4 +1,4 @@
-#include "ShaderCopyHelperPrivatePCH.h" 
+#include "ShaderCopyHelper.h" 
 
 FShaderFileVisitor::FShaderFileVisitor()
 {

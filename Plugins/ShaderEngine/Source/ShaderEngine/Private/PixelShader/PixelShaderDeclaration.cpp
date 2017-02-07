@@ -1,5 +1,6 @@
 #include "ShaderEngine.h"
 #include "ShaderParameterUtils.h"
+
 #include "RHIStaticStates.h"
 
 // These are needed to actually implement the constant buffers so they are available inside our shader
@@ -31,7 +32,7 @@ void FPixelShaderDeclaration::SetSurfaces(FRHICommandList& RHICmdList, FShaderRe
 {
 	FPixelShaderRHIParamRef PixelShaderRHI = GetPixelShader();
 
-	//This actually sets the shader resource view to the texture parameter in the shader :)
+	// This actually sets the shader resource view to the texture parameter in the shader :)
 	if (TextureParameter.IsBound()) 
 	{
 		RHICmdList.SetShaderResourceViewParameter(PixelShaderRHI, TextureParameter.GetBaseIndex(), TextureParameterSRV);
@@ -48,10 +49,7 @@ void FPixelShaderDeclaration::UnbindBuffers(FRHICommandList& RHICmdList)
 	}
 }
 
-//This is what will instantiate the shader into the engine from the engine/Shaders folder
+// This is what will instantiate the shader into the engine from the engine/Shaders folder
 //                      ShaderType               ShaderFileName     Shader function name            Type
 IMPLEMENT_SHADER_TYPE(, FVertexShaderExample, TEXT("PixelShaderExample"), TEXT("MainVertexShader"), SF_Vertex);
 IMPLEMENT_SHADER_TYPE(, FPixelShaderDeclaration, TEXT("PixelShaderExample"), TEXT("MainPixelShader"), SF_Pixel);
-
-//Needed to make sure the plugin works :)
-//IMPLEMENT_MODULE(FDefaultModuleImpl, PixelShader)

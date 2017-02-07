@@ -53,8 +53,8 @@ public:
 class FCustomVertexShaderExample : public FGlobalShader
 {
 	DECLARE_SHADER_TYPE(FCustomVertexShaderExample, Global)
-public:
 
+public:
 	static bool ShouldCache(EShaderPlatform Platform) { return true; }
 
 	FCustomVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer) {}
@@ -70,7 +70,6 @@ class FCustomPixelShaderDeclaration : public FGlobalShader
 	DECLARE_SHADER_TYPE(FCustomPixelShaderDeclaration, Global)
 
 public:
-
 	FCustomPixelShaderDeclaration() {}
 
 	explicit FCustomPixelShaderDeclaration(const ShaderMetaType::CompiledShaderInitializerType& Initializer);

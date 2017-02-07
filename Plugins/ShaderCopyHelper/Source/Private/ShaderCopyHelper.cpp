@@ -1,22 +1,41 @@
-#include "ShaderCopyHelperPrivatePCH.h" 
+#include "ShaderCopyHelper.h"
+
 #include "Developer/DesktopPlatform/public/DesktopPlatformModule.h"
+
 #include "GenericPlatformFile.h"
 #include "PlatformFilemanager.h"
+
+#include "LevelEditor.h"
+
+#define LOCTEXT_NAMESPACE "FShaderCopyHelperModule"
 
 DEFINE_LOG_CATEGORY_STATIC(ShaderCopyHelper, Log, All)
 
 void FShaderCopyHelperModule::StartupModule()
 {
-	UE_LOG(ShaderCopyHelper, Log, TEXT("Shader Copy Helper Plugin loaded!"));
+	PushShaders();
 
+	UE_LOG(ShaderCopyHelper, Log, TEXT("Shader Copy Helper Plugin loaded!"));
+}
+
+void FShaderCopyHelperModule::ShutdownModule()
+{
+	PopShaders();
+
+	UE_LOG(ShaderCopyHelper, Log, TEXT("Shader Copy Helper Plugin unloaded!"));
+}
+
+void FShaderCopyHelperModule::PushShaders()
+{
 	FString GameShadersDirectory = FPaths::Combine(*FPaths::GameDir(), TEXT("Shaders"));
 	FString EngineShadersDirectory = FPaths::Combine(*FPaths::EngineDir(), TEXT("Shaders"));
+	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
 	ShaderFiles = new FShaderFileVisitor();
-	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 	PlatformFile.IterateDirectoryRecursively(*GameShadersDirectory, *ShaderFiles);
-	
-	UE_LOG(ShaderCopyHelper, Log, TEXT("Copying project shader files to Engine/Shaders/"));
+
+	UE_LOG(ShaderCopyHelper, Log, TEXT("Copying project shader files to Engine/Shaders/..."));
+
 	for (int32 ShaderFileIndex = 0; ShaderFileIndex < ShaderFiles->ShaderFilePaths.Num(); ShaderFileIndex++)
 	{
 		FString CurrentShaderFile = ShaderFiles->ShaderFilePaths[ShaderFileIndex];
@@ -34,12 +53,13 @@ void FShaderCopyHelperModule::StartupModule()
 	}
 }
 
-void FShaderCopyHelperModule::ShutdownModule()
+void FShaderCopyHelperModule::PopShaders()
 {
 	FString EngineShadersDirectory = FPaths::Combine(*FPaths::EngineDir(), TEXT("Shaders"));
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
-	UE_LOG(ShaderCopyHelper, Log, TEXT("Deleting project shaders from Engine/Shaders/"));
+	UE_LOG(ShaderCopyHelper, Log, TEXT("Deleting project shaders from Engine/Shaders/..."));
+
 	for (int32 ShaderFileIndex = 0; ShaderFileIndex < ShaderFiles->ShaderFilePaths.Num(); ShaderFileIndex++)
 	{
 		FString EngineShaderFullPath = FPaths::Combine(*EngineShadersDirectory, *ShaderFiles->ShaderFilePaths[ShaderFileIndex]);
@@ -55,8 +75,8 @@ void FShaderCopyHelperModule::ShutdownModule()
 	}
 
 	delete ShaderFiles;
-
-	UE_LOG(ShaderCopyHelper, Log, TEXT("Shader Copy Helper Plugin unloaded!"));
 }
+
+#undef LOCTEXT_NAMESPACE
 
 IMPLEMENT_MODULE(FShaderCopyHelperModule, ShaderCopyHelper)

@@ -1,5 +1,6 @@
 #include "ShaderEngine.h"
 #include "ShaderParameterUtils.h"
+
 #include "RHIStaticStates.h"
 
 // These are needed to actually implement the constant buffers so they are available inside our shader
@@ -52,6 +53,3 @@ void FComputeShaderDeclaration::UnbindBuffers(FRHICommandList& RHICmdList)
 // This is what will instantiate the shader into the engine from the engine/Shaders folder
 /*                      ShaderClass                    SourceFilename                FunctionName			   Type   */
 IMPLEMENT_SHADER_TYPE(, FComputeShaderDeclaration, TEXT("ComputeShaderExample"), TEXT("MainComputeShader"), SF_Compute);
-
-// This is required for the plugin to build :)
-// IMPLEMENT_MODULE(FDefaultModuleImpl, ComputeShader)
