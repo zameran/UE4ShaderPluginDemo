@@ -27,3 +27,5 @@ private:
 	FShadersPushed OnShadersPushedEvent;
 	FShadersPoped OnShadersPopedEvent;
 };
+
+DEFINE_LOG_CATEGORY_STATIC(ShaderCopyHelper, Log, All)

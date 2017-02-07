@@ -18,3 +18,5 @@ private:
 private:
 	TSharedPtr<class FUICommandList> PluginCommands;
 };
+
+DEFINE_LOG_CATEGORY_STATIC(ShaderEngineEditor, Log, All)

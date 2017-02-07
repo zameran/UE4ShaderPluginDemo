@@ -18,3 +18,5 @@ public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 };
+
+DEFINE_LOG_CATEGORY_STATIC(ShaderEngine, Log, All)

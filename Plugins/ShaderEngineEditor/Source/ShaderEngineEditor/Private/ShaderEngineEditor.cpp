@@ -14,8 +14,6 @@ static const FName ShaderEngineEditorTabName("ShaderEngineEditor");
 
 #define LOCTEXT_NAMESPACE "FShaderEngineEditorModule"
 
-DEFINE_LOG_CATEGORY_STATIC(ShaderEngineEditor, Log, All)
-
 void FShaderEngineEditorModule::StartupModule()
 {
 	FShaderEngineEditorStyle::Initialize();
@@ -55,8 +53,6 @@ void FShaderEngineEditorModule::PluginButtonClicked()
 		ShaderCopyHelperModule.PopShaders();
 		ShaderCopyHelperModule.PushShaders();
 	}
-
-	//GEngine->GameViewport->Exec(NULL, TEXT("RECOMPILESHADERS CHANGED"), *GLog);
 }
 
 void FShaderEngineEditorModule::AddToolbarExtension(FToolBarBuilder& Builder)

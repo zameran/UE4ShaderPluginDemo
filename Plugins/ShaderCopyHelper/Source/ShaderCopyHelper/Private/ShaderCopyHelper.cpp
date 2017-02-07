@@ -3,13 +3,12 @@
 #include "Developer/DesktopPlatform/public/DesktopPlatformModule.h"
 
 #include "GenericPlatformFile.h"
+
 #include "PlatformFilemanager.h"
 
 #include "LevelEditor.h"
 
 #define LOCTEXT_NAMESPACE "FShaderCopyHelperModule"
-
-DEFINE_LOG_CATEGORY_STATIC(ShaderCopyHelper, Log, All)
 
 void FShaderCopyHelperModule::StartupModule()
 {
