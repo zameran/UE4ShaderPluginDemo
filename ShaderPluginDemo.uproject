@@ -20,7 +20,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "LocationServicesBPLibrary",
+			"Name": "AlembicImporter",
 			"Enabled": false
 		},
 		{
@@ -28,87 +28,7 @@
 			"Enabled": false
 		},
 		{
-			"Name": "IOSDeviceProfileSelector",
-			"Enabled": false
-		},
-		{
-			"Name": "WindowsDeviceProfileSelector",
-			"Enabled": true
-		},
-		{
-			"Name": "FacialAnimation",
-			"Enabled": false
-		},
-		{
-			"Name": "LevelSequenceEditor",
-			"Enabled": false
-		},
-		{
-			"Name": "MatineeToLevelSequence",
-			"Enabled": false
-		},
-		{
-			"Name": "MediaPlayerEditor",
-			"Enabled": false
-		},
-		{
-			"Name": "SpeedTreeImporter",
-			"Enabled": false
-		},
-		{
-			"Name": "UObjectPlugin",
-			"Enabled": false
-		},
-		{
-			"Name": "ArchVisCharacter",
-			"Enabled": false
-		},
-		{
-			"Name": "CharacterAI",
-			"Enabled": false
-		},
-		{
-			"Name": "AlembicImporter",
-			"Enabled": false
-		},
-		{
 			"Name": "AndroidMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "AvfMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "WmfMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "MfMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "TcpMessaging",
-			"Enabled": false
-		},
-		{
-			"Name": "UdpMessaging",
-			"Enabled": false
-		},
-		{
-			"Name": "EpicSurvey",
-			"Enabled": false
-		},
-		{
-			"Name": "HTML5Networking",
-			"Enabled": false
-		},
-		{
-			"Name": "MobileLauncherProfileWizard",
-			"Enabled": false
-		},
-		{
-			"Name": "MobilePatchingUtils",
 			"Enabled": false
 		},
 		{
@@ -120,7 +40,103 @@
 			"Enabled": false
 		},
 		{
-			"Name": "WindowsMoviePlayer",
+			"Name": "ArchVisCharacter",
+			"Enabled": false
+		},
+		{
+			"Name": "AudioCapture",
+			"Enabled": false
+		},
+		{
+			"Name": "AvfMedia",
+			"Enabled": false
+		},
+		{
+			"Name": "CableComponent",
+			"Enabled": false
+		},
+		{
+			"Name": "CharacterAI",
+			"Enabled": false
+		},
+		{
+			"Name": "CodeLiteSourceCodeAccess",
+			"Enabled": false
+		},
+		{
+			"Name": "CustomMeshComponent",
+			"Enabled": false
+		},
+		{
+			"Name": "EpicSurvey",
+			"Enabled": false
+		},
+		{
+			"Name": "ExampleDeviceProfileSelector",
+			"Enabled": false
+		},
+		{
+			"Name": "HTML5Networking",
+			"Enabled": false
+		},
+		{
+			"Name": "FacialAnimation",
+			"Enabled": false
+		},
+		{
+			"Name": "GearVR",
+			"Enabled": false
+		},
+		{
+			"Name": "IOSDeviceProfileSelector",
+			"Enabled": false
+		},
+		{
+			"Name": "KDevelopSourceCodeAccess",
+			"Enabled": false
+		},
+		{
+			"Name": "LevelSequenceEditor",
+			"Enabled": false
+		},
+		{
+			"Name": "LightPropagationVolume",
+			"Enabled": false
+		},
+		{
+			"Name": "MatineeToLevelSequence",
+			"Enabled": false
+		},
+		{
+			"Name": "MfMedia",
+			"Enabled": false
+		},
+		{
+			"Name": "MediaPlayerEditor",
+			"Enabled": false
+		},
+		{
+			"Name": "LocationServicesBPLibrary",
+			"Enabled": false
+		},
+		{
+			"Name": "MobilePatchingUtils",
+			"Enabled": false
+		},
+		{
+			"Name": "Ansel",
+			"Enabled": true
+		},
+		{
+			"Name": "OculusInput",
+			"Enabled": false
+		},
+		{
+			"Name": "OculusLibrary",
+			"Enabled": false
+		},
+		{
+			"Name": "OculusRift",
 			"Enabled": false
 		},
 		{
@@ -144,43 +160,23 @@
 			"Enabled": false
 		},
 		{
-			"Name": "Ansel",
-			"Enabled": true
+			"Name": "Paper2D",
+			"Enabled": false
+		},
+		{
+			"Name": "PerforceSourceControl",
+			"Enabled": false
 		},
 		{
 			"Name": "PhysXVehicles",
 			"Enabled": false
 		},
 		{
-			"Name": "CodeLiteSourceCodeAccess",
+			"Name": "ProceduralMeshComponent",
 			"Enabled": false
 		},
 		{
-			"Name": "KDevelopSourceCodeAccess",
-			"Enabled": false
-		},
-		{
-			"Name": "CableComponent",
-			"Enabled": false
-		},
-		{
-			"Name": "LightPropagationVolume",
-			"Enabled": false
-		},
-		{
-			"Name": "GearVR",
-			"Enabled": false
-		},
-		{
-			"Name": "OculusInput",
-			"Enabled": false
-		},
-		{
-			"Name": "OculusLibrary",
-			"Enabled": false
-		},
-		{
-			"Name": "OculusRift",
+			"Name": "SpeedTreeImporter",
 			"Enabled": false
 		},
 		{
@@ -188,11 +184,31 @@
 			"Enabled": false
 		},
 		{
-			"Name": "ExampleDeviceProfileSelector",
+			"Name": "SubversionSourceControl",
 			"Enabled": false
 		},
 		{
-			"Name": "Paper2D",
+			"Name": "UObjectPlugin",
+			"Enabled": false
+		},
+		{
+			"Name": "WindowsDeviceProfileSelector",
+			"Enabled": true
+		},
+		{
+			"Name": "WindowsMoviePlayer",
+			"Enabled": false
+		},
+		{
+			"Name": "MobileLauncherProfileWizard",
+			"Enabled": false
+		},
+		{
+			"Name": "WmfMedia",
+			"Enabled": false
+		},
+		{
+			"Name": "XCodeSourceCodeAccess",
 			"Enabled": false
 		}
 	],
