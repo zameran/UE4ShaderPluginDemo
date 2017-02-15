@@ -2,7 +2,7 @@
 
 #include "SlateBasics.h"
 
-class FShaderEngineEditorStyle
+class SHADERENGINEEDITOR_API FShaderEngineEditorStyle
 {
 public:
 	static void Initialize();
@@ -14,8 +14,6 @@ public:
 	static FName GetStyleSetName();
 
 private:
-	static TSharedRef< class FSlateStyleSet > Create();
-
-private:
-	static TSharedPtr< class FSlateStyleSet > StyleInstance;
+	static TSharedRef<class FSlateStyleSet> Create();
+	static TSharedPtr<class FSlateStyleSet> StyleInstance;
 };

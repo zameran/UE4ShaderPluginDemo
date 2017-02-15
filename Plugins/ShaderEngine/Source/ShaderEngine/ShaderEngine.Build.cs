@@ -19,15 +19,6 @@ public class ShaderEngine : ModuleRules
 			}
 		);
 
-		/*
-		"Core",
-		"CoreUObject",
-		"Engine",
-		"RenderCore",
-		"ShaderCore",
-		"RHI"
-		*/
-
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{

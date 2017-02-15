@@ -3,9 +3,8 @@
 #include "ModuleManager.h"
 
 class FToolBarBuilder;
-class FMenuBuilder;
 
-class FShaderEngineEditorModule : public IModuleInterface
+class SHADERENGINEEDITOR_API FShaderEngineEditorModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
@@ -19,3 +18,5 @@ private:
 private:
 	TSharedPtr<class FUICommandList> PluginCommands;
 };
+
+DEFINE_LOG_CATEGORY_STATIC(ShaderEngineEditor, Log, All)

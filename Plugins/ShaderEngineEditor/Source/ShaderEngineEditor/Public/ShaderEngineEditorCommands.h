@@ -4,10 +4,9 @@
 
 #include "ShaderEngineEditorStyle.h"
 
-class FShaderEngineEditorCommands : public TCommands<FShaderEngineEditorCommands>
+class SHADERENGINEEDITOR_API FShaderEngineEditorCommands : public TCommands<FShaderEngineEditorCommands>
 {
 public:
-
 	FShaderEngineEditorCommands() : TCommands<FShaderEngineEditorCommands>(TEXT("ShaderEngineEditor"), NSLOCTEXT("Contexts", "ShaderEngineEditor", "ShaderEngineEditor Plugin"), NAME_None, FShaderEngineEditorStyle::GetStyleSetName())
 	{
 
@@ -16,5 +15,5 @@ public:
 	virtual void RegisterCommands() override;
 
 public:
-	TSharedPtr< FUICommandInfo > PluginAction;
+	TSharedPtr<FUICommandInfo> PluginAction;
 };

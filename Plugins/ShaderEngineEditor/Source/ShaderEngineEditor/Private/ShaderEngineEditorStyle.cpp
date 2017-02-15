@@ -4,7 +4,7 @@
 #include "SlateGameResources.h"
 #include "IPluginManager.h"
 
-TSharedPtr< FSlateStyleSet > FShaderEngineEditorStyle::StyleInstance = NULL;
+TSharedPtr<FSlateStyleSet> FShaderEngineEditorStyle::StyleInstance = NULL;
 
 void FShaderEngineEditorStyle::Initialize()
 {
@@ -42,9 +42,9 @@ const FVector2D Icon16x16(16.0f, 16.0f);
 const FVector2D Icon20x20(20.0f, 20.0f);
 const FVector2D Icon40x40(40.0f, 40.0f);
 
-TSharedRef< FSlateStyleSet > FShaderEngineEditorStyle::Create()
+TSharedRef<FSlateStyleSet> FShaderEngineEditorStyle::Create()
 {
-	TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("ShaderEngineEditorStyle"));
+	TSharedRef<FSlateStyleSet> Style = MakeShareable(new FSlateStyleSet("ShaderEngineEditorStyle"));
 
 	Style->SetContentRoot(IPluginManager::Get().FindPlugin("ShaderEngineEditor")->GetBaseDir() / TEXT("Resources"));
 	Style->Set("ShaderEngineEditor.PluginAction", new IMAGE_BRUSH(TEXT("ButtonIcon_40x"), Icon40x40));

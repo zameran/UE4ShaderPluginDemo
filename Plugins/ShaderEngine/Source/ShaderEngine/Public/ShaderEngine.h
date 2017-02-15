@@ -12,9 +12,11 @@
 #include "PixelShader/PixelShaderDeclaration.h"
 #include "PixelShader/PixelShaderUsageExample.h"
 
-class FShaderEngineModule : public IModuleInterface
+class SHADERENGINE_API FShaderEngineModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 };
+
+DEFINE_LOG_CATEGORY_STATIC(ShaderEngine, Log, All)
