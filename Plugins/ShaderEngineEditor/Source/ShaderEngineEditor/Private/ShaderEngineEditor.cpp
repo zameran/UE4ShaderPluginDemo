@@ -5,6 +5,7 @@
 
 #include "ShaderCopyHelper.h"
 
+#include "ShaderEngineEditorUtils.h"
 #include "ShaderEngineEditorStyle.h"
 #include "ShaderEngineEditorCommands.h"
 
@@ -52,6 +53,8 @@ void FShaderEngineEditorModule::PluginButtonClicked()
 	{
 		ShaderCopyHelperModule.PopShaders();
 		ShaderCopyHelperModule.PushShaders();
+
+		UShaderEngineEditorUtils::RecompileShadersConsoleCommand();
 	}
 }
 
