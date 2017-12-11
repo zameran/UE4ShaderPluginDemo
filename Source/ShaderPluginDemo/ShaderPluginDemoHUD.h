@@ -1,7 +1,6 @@
+// Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 #pragma once 
-
 #include "GameFramework/HUD.h"
-
 #include "ShaderPluginDemoHUD.generated.h"
 
 UCLASS()
@@ -18,4 +17,6 @@ public:
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
+
 };
+
