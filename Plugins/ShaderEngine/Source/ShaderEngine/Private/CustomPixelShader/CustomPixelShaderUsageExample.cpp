@@ -3,7 +3,7 @@
 
 // It seems to be the convention to expose all vertex declarations as globals, and then reference them as externs in the headers where they are needed.
 // It kind of makes sense since they do not contain any parameters that change and are purely used as their names suggest, as declarations :)
-TGlobalResource<FCustomTextureVertexDeclaration> GTextureVertexDeclaration;
+TGlobalResource<FCustomTextureVertexDeclaration> GCPSTextureVertexDeclaration;
 
 FCustomPixelShaderUsageExample::FCustomPixelShaderUsageExample(FColor StartColor, ERHIFeatureLevel::Type ShaderFeatureLevel)
 {
@@ -104,7 +104,7 @@ void FCustomPixelShaderUsageExample::ExecutePixelShaderInternal()
 	TShaderMapRef<FCustomVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
 	TShaderMapRef<FCustomPixelShaderDeclaration> PixelShader(GetGlobalShaderMap(FeatureLevel));
 
-	SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
+	SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GCPSTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
 
 	PixelShader->SetSurfaces(RHICmdList, TextureParameterSRV);
 	PixelShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
