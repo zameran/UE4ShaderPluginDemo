@@ -26,8 +26,8 @@
 #include "Public/RHIStaticStates.h"
 #include "Public/PipelineStateCache.h"
 
-//It seems to be the convention to expose all vertex declarations as globals, and then reference them as externs in the headers where they are needed.
-//It kind of makes sense since they do not contain any parameters that change and are purely used as their names suggest, as declarations :)
+// It seems to be the convention to expose all vertex declarations as globals, and then reference them as externs in the headers where they are needed.
+// It kind of makes sense since they do not contain any parameters that change and are purely used as their names suggest, as declarations :)
 TGlobalResource<FTextureVertexDeclaration> GTextureVertexDeclaration;
 
 FPixelShaderUsageExample::FPixelShaderUsageExample(FColor StartColor, ERHIFeatureLevel::Type ShaderFeatureLevel)
@@ -58,7 +58,7 @@ void FPixelShaderUsageExample::ExecutePixelShader(UTextureRenderTarget2D* Render
 {
 	check(IsInGameThread());
 
-	if (bIsUnloading || bIsPixelShaderExecuting) //Skip this execution round if we are already executing
+	if (bIsUnloading || bIsPixelShaderExecuting) // Skip this execution round if we are already executing...
 		return;
 
 	if (!RenderTarget)
@@ -69,18 +69,17 @@ void FPixelShaderUsageExample::ExecutePixelShader(UTextureRenderTarget2D* Render
 	if (TextureParameter != InputTexture)
 		bMustRegenerateSRV = true;
 
-	//Now set our runtime parameters!
+	// Now set our runtime parameters!
 	VariableParameters.EndColor = FVector4(EndColor.R / 255.0, EndColor.G / 255.0, EndColor.B / 255.0, EndColor.A / 255.0);
 	VariableParameters.TextureParameterBlendFactor = TextureParameterBlendFactor;
 
 	CurrentRenderTarget = RenderTarget;
 	TextureParameter = InputTexture;
 
-	//This macro sends the function we declare inside to be run on the render thread. What we do is essentially just send this class and tell the render thread to run the internal render function as soon as it can.
-	//I am still not 100% Certain on the thread safety of this, if you are getting crashes, depending on how advanced code you have in the start of the ExecutePixelShader function, you might have to use a lock :)
-	ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(
-		FPixelShaderRunner,
-		FPixelShaderUsageExample*, PixelShader, this,
+	// This macro sends the function we declare inside to be run on the render thread. 
+	// What we do is essentially just send this class and tell the render thread to run the internal render function as soon as it can.
+	// I am still not 100% Certain on the thread safety of this, if you are getting crashes, depending on how advanced code you have in the start of the ExecutePixelShader function, you might have to use a lock :)
+	ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(FPixelShaderRunner, FPixelShaderUsageExample*, PixelShader, this,
 		{
 			PixelShader->ExecutePixelShaderInternal();
 		}
@@ -91,7 +90,7 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 {
 	check(IsInRenderingThread());
 
-	if (bIsUnloading) //If we are about to unload, so just clean up the SRV :)
+	if (bIsUnloading) // If we are about to unload, so just clean up the SRV :)
 	{
 		if (NULL != TextureParameterSRV)
 		{
@@ -104,7 +103,7 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 
 	FRHICommandListImmediate& RHICmdList = GRHICommandList.GetImmediateCommandList();
 
-	//If our input texture reference has changed, we need to recreate our SRV
+	// If our input texture reference has changed, we need to recreate our SRV:
 	if (bMustRegenerateSRV)
 	{
 		bMustRegenerateSRV = false;
@@ -118,17 +117,9 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 		TextureParameterSRV = RHICreateShaderResourceView(TextureParameter, 0);
 	}
 
-	// This is where the magic happens
+	// This is where the magic happens...
 	TShaderMapRef<FVertexShaderExample> VertexShader(GetGlobalShaderMap(FeatureLevel));
 	TShaderMapRef<FPixelShaderDeclaration> PixelShader(GetGlobalShaderMap(FeatureLevel));
-
-
-
-
-
-
-
-
 
 	CurrentTexture = CurrentRenderTarget->GetRenderTargetResource()->GetRenderTargetTexture();
 	SetRenderTarget(RHICmdList, CurrentTexture, FTextureRHIRef());
@@ -137,7 +128,6 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 	//RHICmdList.SetDepthStencilState(TStaticDepthStencilState<false, CF_Always>::GetRHI());
 	//static FGlobalBoundShaderState BoundShaderState;
 	//SetGlobalBoundShaderState(RHICmdList, FeatureLevel, BoundShaderState, GTextureVertexDeclaration.VertexDeclarationRHI, *VertexShader, *PixelShader);
-
 
 	// Replacing old GlobalBoundShaderState with the new FGraphicsPipelineState (UE 4.17)
 	FGraphicsPipelineStateInitializer GraphicsPSOInit;
@@ -151,12 +141,10 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 	GraphicsPSOInit.BoundShaderState.PixelShaderRHI = GETSAFERHISHADER_PIXEL(*PixelShader);
 	SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit);
 
-
-
 	PixelShader->SetSurfaces(RHICmdList, TextureParameterSRV);
 	PixelShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
 
-	// Draw a fullscreen quad that we can run our pixel shader on
+	// Draw a fullscreen quad that we can run our pixel shader on.
 	FTextureVertex Vertices[4];
 	Vertices[0].Position = FVector4(-1.0f, 1.0f, 0, 1.0f);
 	Vertices[1].Position = FVector4(1.0f, 1.0f, 0, 1.0f);
@@ -178,7 +166,7 @@ void FPixelShaderUsageExample::ExecutePixelShaderInternal()
 		false, FResolveParams());
 
 
-	if (bSave) //Save to disk if we have a save request!
+	if (bSave) // Save to disk if we have a save request!
 	{
 		bSave = false;
 
@@ -197,12 +185,12 @@ void FPixelShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmdLi
 	FReadSurfaceDataFlags ReadDataFlags;
 	ReadDataFlags.SetLinearToGamma(false);
 	ReadDataFlags.SetOutputStencil(false);
-	ReadDataFlags.SetMip(0); //No mip supported ofc!
+	ReadDataFlags.SetMip(0); // No mip supported ofc!
 	
 	//This is pretty straight forward. Since we are using a standard format, we can use this convenience function instead of having to lock rect.
 	RHICmdList.ReadSurfaceData(CurrentTexture, FIntRect(0, 0, CurrentTexture->GetSizeX(), CurrentTexture->GetSizeY()), Bitmap, ReadDataFlags);
 
-	// if the format and texture type is supported
+	// If the format and texture type is supported:
 	if (Bitmap.Num())
 	{
 		// Create screenshot folder if not already present.
@@ -212,7 +200,7 @@ void FPixelShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmdLi
 
 		uint32 ExtendXWithMSAA = Bitmap.Num() / CurrentTexture->GetSizeY();
 
-		// Save the contents of the array to a bitmap file. (24bit only so alpha channel is dropped)
+		// Save the contents of the array to a bitmap file (24bit only so alpha channel is dropped).
 		FFileHelper::CreateBitmap(*ScreenFileName, ExtendXWithMSAA, CurrentTexture->GetSizeY(), Bitmap.GetData());
 
 		UE_LOG(LogConsoleResponse, Display, TEXT("Content was saved to \"%s\""), *FPaths::ScreenShotDir());

@@ -1,5 +1,7 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
+
 #pragma once
+
 #include "GameFramework/Character.h"
 #include "PixelShaderUsageExample.h"
 #include "ComputeShaderUsageExample.h"
@@ -27,6 +29,7 @@ class AShaderPluginDemoCharacter : public ACharacter
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
+
 public:
 	AShaderPluginDemoCharacter();
 
@@ -83,10 +86,11 @@ protected:
 		FVector Location;
 		bool bMoved;
 	};
+
 	void BeginTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 	void EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 	void TouchUpdate(const ETouchIndex::Type FingerIndex, const FVector Location);
-	TouchData	TouchItem;
+	TouchData TouchItem;
 	
 protected:
 	// APawn interface
@@ -106,10 +110,6 @@ public:
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
-
-
-
 
 	/************************************************************************/
 	/* Plugin Shader Demo variables!                                        */
@@ -145,4 +145,3 @@ private:
 	void SavePixelShaderOutput();
 	void SaveComputeShaderOutput();
 };
-

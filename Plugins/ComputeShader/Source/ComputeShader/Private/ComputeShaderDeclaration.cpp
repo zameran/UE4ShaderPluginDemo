@@ -26,15 +26,16 @@
 #include "ShaderParameterUtils.h"
 #include "RHIStaticStates.h"
 
-//These are needed to actually implement the constant buffers so they are available inside our shader
-//They also need to be unique over the entire solution since they can in fact be accessed from any shader
+// These are needed to actually implement the constant buffers so they are available inside our shader.
+// They also need to be unique over the entire solution since they can in fact be accessed from any shader.
 IMPLEMENT_UNIFORM_BUFFER_STRUCT(FComputeShaderConstantParameters, TEXT("CSConstants"))
 IMPLEMENT_UNIFORM_BUFFER_STRUCT(FComputeShaderVariableParameters, TEXT("CSVariables"))
 
 FComputeShaderDeclaration::FComputeShaderDeclaration(const ShaderMetaType::CompiledShaderInitializerType& Initializer)
 : FGlobalShader(Initializer)
 {
-	//This call is what lets the shader system know that the surface OutputSurface is going to be available in the shader. The second parameter is the name it will be known by in the shader
+	// This call is what lets the shader system know that the surface OutputSurface is going to be available in the shader. 
+	// The second parameter is the name it will be known by in the shader.
 	OutputSurface.Bind(Initializer.ParameterMap, TEXT("OutputSurface"));
 }
 
@@ -49,7 +50,9 @@ void FComputeShaderDeclaration::SetSurfaces(FRHICommandList& RHICmdList, FUnorde
 	FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
 
 	if (OutputSurface.IsBound())
+	{
 		RHICmdList.SetUAVParameter(ComputeShaderRHI, OutputSurface.GetBaseIndex(), OutputSurfaceUAV);
+	}
 }
 
 void FComputeShaderDeclaration::SetUniformBuffers(FRHICommandList& RHICmdList, FComputeShaderConstantParameters& ConstantParameters, FComputeShaderVariableParameters& VariableParameters)
@@ -64,18 +67,20 @@ void FComputeShaderDeclaration::SetUniformBuffers(FRHICommandList& RHICmdList, F
 	SetUniformBufferParameter(RHICmdList, GetComputeShader(), GetUniformBufferParameter<FComputeShaderVariableParameters>(), VariableParametersBuffer);
 }
 
-/* Unbinds buffers that will be used elsewhere */
+// Unbinds buffers that will be used elsewhere...
 void FComputeShaderDeclaration::UnbindBuffers(FRHICommandList& RHICmdList)
 {
 	FComputeShaderRHIParamRef ComputeShaderRHI = GetComputeShader();
 
 	if (OutputSurface.IsBound())
+	{
 		RHICmdList.SetUAVParameter(ComputeShaderRHI, OutputSurface.GetBaseIndex(), FUnorderedAccessViewRHIRef());
+	}
 }
 
-//This is what will instantiate the shader into the engine from the engine/Shaders folder
+// This is what will instantiate the shader into the engine from the Engine/Shaders folder
 //                      ShaderType                    ShaderFileName                Shader function name       Type
 IMPLEMENT_SHADER_TYPE(, FComputeShaderDeclaration, TEXT("/Plugin/ComputeShader/Private/ComputeShaderExample.usf"), TEXT("MainComputeShader"), SF_Compute);
 
-//This is required for the plugin to build :)
+// This is required for the plugin to build :)
 IMPLEMENT_MODULE(FDefaultModuleImpl, ComputeShader)

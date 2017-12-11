@@ -28,12 +28,12 @@
 #include "UniformBuffer.h"
 #include "RHICommandList.h"
 
-//This buffer should contain variables that never, or rarely change
+// This buffer should contain variables that never, or rarely change.
 BEGIN_UNIFORM_BUFFER_STRUCT(FComputeShaderConstantParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(float, SimulationSpeed)
 END_UNIFORM_BUFFER_STRUCT(FComputeShaderConstantParameters)
 
-//This buffer is for variables that change very often (each frame for example)
+// This buffer is for variables that change very often (each frame for example).
 BEGIN_UNIFORM_BUFFER_STRUCT(FComputeShaderVariableParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(float, TotalTimeElapsedSeconds)
 END_UNIFORM_BUFFER_STRUCT(FComputeShaderVariableParameters)
@@ -69,14 +69,14 @@ public:
 		return bShaderHasOutdatedParams;
 	}
 
-	//This function is required to let us bind our runtime surface to the shader using an UAV.
+	// This function is required to let us bind our runtime surface to the shader using an UAV.
 	void SetSurfaces(FRHICommandList& RHICmdList, FUnorderedAccessViewRHIRef OutputSurfaceUAV);
-	//This function is required to bind our constant / uniform buffers to the shader.
+	// This function is required to bind our constant / uniform buffers to the shader.
 	void SetUniformBuffers(FRHICommandList& RHICmdList, FComputeShaderConstantParameters& ConstantParameters, FComputeShaderVariableParameters& VariableParameters);
-	//This is used to clean up the buffer binds after each invocation to let them be changed and used elsewhere if needed.
+	// This is used to clean up the buffer binds after each invocation to let them be changed and used elsewhere if needed.
 	void UnbindBuffers(FRHICommandList& RHICmdList);
 
 private:
-	//This is the actual output resource that we will bind to the compute shader
+	// This is the actual output resource that we will bind to the compute shader.
 	FShaderResourceParameter OutputSurface;
 };

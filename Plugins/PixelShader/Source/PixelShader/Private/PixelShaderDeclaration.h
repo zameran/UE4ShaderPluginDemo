@@ -28,12 +28,12 @@
 #include "UniformBuffer.h"
 #include "RHICommandList.h"
 
-//This buffer should contain variables that never, or rarely change
+// This buffer should contain variables that never, or rarely change.
 BEGIN_UNIFORM_BUFFER_STRUCT(FPixelShaderConstantParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, StartColor)
 END_UNIFORM_BUFFER_STRUCT(FPixelShaderConstantParameters)
 
-//This buffer is for variables that change very often (each frame for example)
+// This buffer is for variables that change very often (each frame for example).
 BEGIN_UNIFORM_BUFFER_STRUCT(FPixelShaderVariableParameters, )
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(float, TextureParameterBlendFactor)
 DECLARE_UNIFORM_BUFFER_STRUCT_MEMBER(FVector4, EndColor)
@@ -85,10 +85,15 @@ public:
 
 	static bool ShouldCache(EShaderPlatform Platform) { return true; }
 
-	FVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) :
-		FGlobalShader(Initializer)
-	{}
-	FVertexShaderExample() {}
+	FVertexShaderExample(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer)
+	{
+		
+	}
+
+	FVertexShaderExample()
+	{
+		
+	}
 };
 
 
@@ -118,15 +123,15 @@ public:
 		return bShaderHasOutdatedParams;
 	}
 
-	//This function is required to let us bind our runtime surface to the shader using an SRV.
+	// This function is required to let us bind our runtime surface to the shader using an SRV.
 	void SetSurfaces(FRHICommandList& RHICmdList, FShaderResourceViewRHIRef TextureParameterSRV);
-	//This function is required to bind our constant / uniform buffers to the shader.
+	// This function is required to bind our constant / uniform buffers to the shader.
 	void SetUniformBuffers(FRHICommandList& RHICmdList, FPixelShaderConstantParameters& ConstantParameters, FPixelShaderVariableParameters& VariableParameters);
-	//This is used to clean up the buffer binds after each invocation to let them be changed and used elsewhere if needed.
+	// This is used to clean up the buffer binds after each invocation to let them be changed and used elsewhere if needed.
 	void UnbindBuffers(FRHICommandList& RHICmdList);
 
 private:
-	//This is how you declare resources that are going to be made available in the HLSL
+	// This is how you declare resources that are going to be made available in the HLSL.
 	FShaderResourceParameter TextureParameter;
 };
 

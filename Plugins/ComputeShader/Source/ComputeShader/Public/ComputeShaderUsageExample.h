@@ -67,10 +67,10 @@ private:
 	FComputeShaderVariableParameters VariableParameters;
 	ERHIFeatureLevel::Type FeatureLevel;
 
-	/** Main texture */
+	// Main texture.
 	FTexture2DRHIRef Texture;
 
-	/** We need a UAV if we want to be able to write to the resource*/
+	// We need a UAV if we want to be able to write to the resource.
 	FUnorderedAccessViewRHIRef TextureUAV;
 
 	void SaveScreenshot(FRHICommandListImmediate& RHICmdList);

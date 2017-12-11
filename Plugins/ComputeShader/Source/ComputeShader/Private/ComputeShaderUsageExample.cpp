@@ -24,7 +24,7 @@
 
 #include "ComputeShaderPrivatePCH.h"
 
-#define NUM_THREADS_PER_GROUP_DIMENSION 32 //This has to be the same as in the compute shader's spec [X, X, 1]
+#define NUM_THREADS_PER_GROUP_DIMENSION 32 // This has to be the same as in the compute shader's spec [X, X, 1]
 
 FComputeShaderUsageExample::FComputeShaderUsageExample(float SimulationSpeed, int32 SizeX, int32 SizeY, ERHIFeatureLevel::Type ShaderFeatureLevel)
 {
@@ -38,11 +38,12 @@ FComputeShaderUsageExample::FComputeShaderUsageExample(float SimulationSpeed, in
 	bIsUnloading = false;
 	bSave = false;
 
-	//There are only a few different texture formats we can use if we want to use the output texture as input in a pixel shader later
-	//I would have loved to go with the R8G8B8A8_UNORM approach, but unfortunately, it seems UE4 does not support this in an obvious way, which is why I chose the UINT format using packing instead :)
-	//There is some excellent information on this topic in the following links:
-    //http://www.gamedev.net/topic/605356-r8g8b8a8-texture-format-in-compute-shader/
-	//https://msdn.microsoft.com/en-us/library/ff728749(v=vs.85).aspx
+	// There are only a few different texture formats we can use if we want to use the output texture as input in a pixel shader later
+	// I would have loved to go with the R8G8B8A8_UNORM approach.
+	// Unfortunately, it seems UE4 does not support this in an obvious way, which is why I chose the UINT format using packing instead :)
+	// There is some excellent information on this topic in the following links:
+	// http://www.gamedev.net/topic/605356-r8g8b8a8-texture-format-in-compute-shader/
+	// https://msdn.microsoft.com/en-us/library/ff728749(v=vs.85).aspx
 	FRHIResourceCreateInfo CreateInfo;
 	Texture = RHICreateTexture2D(SizeX, SizeY, PF_R32_UINT, 1, 1, TexCreate_ShaderResource | TexCreate_UAV, CreateInfo);
 	TextureUAV = RHICreateUnorderedAccessView(Texture);
@@ -55,24 +56,23 @@ FComputeShaderUsageExample::~FComputeShaderUsageExample()
 
 void FComputeShaderUsageExample::ExecuteComputeShader(float TotalElapsedTimeSeconds)
 {
-	if (bIsUnloading || bIsComputeShaderExecuting) //Skip this execution round if we are already executing
+	if (bIsUnloading || bIsComputeShaderExecuting) // Skip this execution round if we are already executing...
 	{
 		return;
 	}
 
 	bIsComputeShaderExecuting = true;
 
-	//Now set our runtime parameters!
+	// Now set our runtime parameters!
 	VariableParameters.TotalTimeElapsedSeconds = TotalElapsedTimeSeconds;
 
-	//This macro sends the function we declare inside to be run on the render thread. What we do is essentially just send this class and tell the render thread to run the internal render function as soon as it can.
-	//I am still not 100% Certain on the thread safety of this, if you are getting crashes, depending on how advanced code you have in the start of the ExecutePixelShader function, you might have to use a lock :)
-	ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(
-		FComputeShaderRunner,
-		FComputeShaderUsageExample*, ComputeShader, this,
+	// This macro sends the function we declare inside to be run on the render thread. 
+	// What we do is essentially just send this class and tell the render thread to run the internal render function as soon as it can.
+	// I am still not 100% Certain on the thread safety of this, if you are getting crashes, depending on how advanced code you have in the start of the ExecutePixelShader function, you might have to use a lock :)
+	ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(FComputeShaderRunner, FComputeShaderUsageExample*, ComputeShader, this,
 		{
-		ComputeShader->ExecuteComputeShaderInternal();
-	}
+			ComputeShader->ExecuteComputeShaderInternal();
+		}
 	);
 }
 
@@ -80,7 +80,7 @@ void FComputeShaderUsageExample::ExecuteComputeShaderInternal()
 {
 	check(IsInRenderingThread());
 	
-	if (bIsUnloading) //If we are about to unload, so just clean up the UAV :)
+	if (bIsUnloading) // If we are about to unload, so just clean up the UAV :)
 	{
 		if (NULL != TextureUAV)
 		{
@@ -91,20 +91,20 @@ void FComputeShaderUsageExample::ExecuteComputeShaderInternal()
 		return;
 	}
 
-	/* Get global RHI command list */
+	// Get global RHI command list...
 	FRHICommandListImmediate& RHICmdList = GRHICommandList.GetImmediateCommandList();
 
-	/** Compute shader calculation */
+	// Compute shader calculation...
 	TShaderMapRef<FComputeShaderDeclaration> ComputeShader(GetGlobalShaderMap(FeatureLevel));
 	RHICmdList.SetComputeShader(ComputeShader->GetComputeShader());
 
-	/* Set inputs/outputs and dispatch compute shader */
+	// Set inputs/outputs and dispatch compute shader...
 	ComputeShader->SetSurfaces(RHICmdList, TextureUAV);
 	ComputeShader->SetUniformBuffers(RHICmdList, ConstantParameters, VariableParameters);
 	DispatchComputeShader(RHICmdList, *ComputeShader, Texture->GetSizeX() / NUM_THREADS_PER_GROUP_DIMENSION, Texture->GetSizeY() / NUM_THREADS_PER_GROUP_DIMENSION, 1);
 	ComputeShader->UnbindBuffers(RHICmdList);
 
-	if (bSave) //Save to disk if we have a save request!
+	if (bSave) // Save to disk if we have a save request!
 	{
 		bSave = false;
 
@@ -118,7 +118,7 @@ void FComputeShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmd
 {
 	TArray<FColor> Bitmap;
 
-	//To access our resource we do a custom read using lockrect
+	// To access our resource we do a custom read using lockrect.
 	uint32 LolStride = 0;
 	char* TextureDataPtr = (char*)RHICmdList.LockTexture2D(Texture, 0, EResourceLockMode::RLM_ReadOnly, LolStride, false);
 
@@ -126,7 +126,7 @@ void FComputeShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmd
 	{
 		uint32* PixelPtr = (uint32*)TextureDataPtr;
 		
-		//Since we are using our custom UINT format, we need to unpack it here to access the actual colors
+		// Since we are using our custom UINT format, we need to unpack it here to access the actual colors.
 		for (uint32 Col = 0; Col < Texture->GetSizeX(); ++Col)
 		{
 			uint32 EncodedPixel = *PixelPtr;
@@ -139,13 +139,13 @@ void FComputeShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmd
 			PixelPtr++;
 		}
 
-		// move to next row:
+		// Move to next row:
 		TextureDataPtr += LolStride;
 	}
 
 	RHICmdList.UnlockTexture2D(Texture, 0, false);
 
-	// if the format and texture type is supported
+	// If the format and texture type is supported:
 	if (Bitmap.Num())
 	{
 		// Create screenshot folder if not already present.
@@ -155,7 +155,7 @@ void FComputeShaderUsageExample::SaveScreenshot(FRHICommandListImmediate& RHICmd
 
 		uint32 ExtendXWithMSAA = Bitmap.Num() / Texture->GetSizeY();
 
-		// Save the contents of the array to a bitmap file. (24bit only so alpha channel is dropped)
+		// Save the contents of the array to a bitmap file (24bit only so alpha channel is dropped).
 		FFileHelper::CreateBitmap(*ScreenFileName, ExtendXWithMSAA, Texture->GetSizeY(), Bitmap.GetData());
 
 		UE_LOG(LogConsoleResponse, Display, TEXT("Content was saved to \"%s\""), *FPaths::ScreenShotDir());

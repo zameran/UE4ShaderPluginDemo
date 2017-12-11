@@ -69,12 +69,12 @@ private:
 	FPixelShaderVariableParameters VariableParameters;
 	ERHIFeatureLevel::Type FeatureLevel;
 
-	/** Main texture */
+	// Main texture.
 	FTexture2DRHIRef CurrentTexture;
 	FTexture2DRHIRef TextureParameter;
 	UTextureRenderTarget2D* CurrentRenderTarget;
 	
-	/** Since we are only reading from the resource, we do not need a UAV; an SRV is sufficient */
+	// Since we are only reading from the resource, we do not need a UAV; an SRV is sufficient.
 	FShaderResourceViewRHIRef TextureParameterSRV;
 
 	void SaveScreenshot(FRHICommandListImmediate& RHICmdList);
